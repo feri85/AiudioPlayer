@@ -1,0 +1,9 @@
+
+
+var PlayerReStore=function(options){
+	loadModul('./engine/nsplayer/style/theme.css');
+	loadModul('./engine/nsplayer/style/player_style.css');
+	loadModul('./engine/nsplayer/dom_player.esx','player_modell');
+	loadModul('./engine/nsplayer/perform_player.esx','Player',[options]);
+	
+};

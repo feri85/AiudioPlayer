@@ -1,0 +1,122 @@
+/*var dom_map="\
+	<div id='player_header'>\
+	</div>\
+	<div id='player_map'>\
+		<div id='player_navbar'>\
+			<div>\
+			</div>\
+		</div>\
+		<div id='volume_navbar'>\
+			<div>\
+			</div>\
+		</div>\
+		<div id='playercontrols'>\
+			<button id='play_button' ></button>\
+			<button id='pause_button' ></button>\
+			<button id='stop_button' ></button>\
+			<button id='backw_button' ></button>\
+			<button id='forew_button' ></button>\
+			<button id='mod_button' ></button>\
+		</div>\
+		<div id='messager'>\
+			<div id='mslines'>\
+				<div class='left'>\
+					00:00:00\
+				</div>\
+				<div class='right'>\
+					00:00:00\
+				</div>\
+				<div class='right'>\
+					volume\
+				</div>\
+			</div>\
+		</div>\
+		<div id='play_src'>\
+			<div>\
+				nothing to played\
+			</div>\
+		</div>\
+	</div>\
+	<div id='playlist_map'>\
+		<p id='lock' style='text-align:center;cursor:pointer'>Open the Media Library and <br>click here to activate the playlist</p>\
+		<ol id='player_playlist' typelist='player'>\
+		</ol\
+	</div>\
+";*/
+
+var player_modell=function(player){
+		var P=new Object();
+		
+		P['div_0']={};
+		P['div_0'].id='player_container';
+		P['div_0'].component='playerelement';
+		
+		P['div_0']['div_1']={};
+		P['div_0']['div_1'].id='player_header';
+		
+		P['div_0']['div_2']={};
+		P['div_0']['div_2'].id='player_map';
+		
+		P['div_0']['div_2']['div_3']={};
+		P['div_0']['div_2']['div_3'].id='player_navbar';
+		P['div_0']['div_2']['div_3']['div_4']={};
+		
+		P['div_0']['div_2']['div_5']={};
+		P['div_0']['div_2']['div_5'].id='volume_navbar';
+		P['div_0']['div_2']['div_5']['div_6']={};
+		
+		P['div_0']['div_2']['div_7']={};
+		P['div_0']['div_2']['div_7'].id='playercontrols';
+		P['div_0']['div_2']['div_7']['button_0']={};
+		P['div_0']['div_2']['div_7']['button_0'].id='play_button';
+		P['div_0']['div_2']['div_7']['button_1']={};
+		P['div_0']['div_2']['div_7']['button_1'].id='pause_button';
+		P['div_0']['div_2']['div_7']['button_2']={};
+		P['div_0']['div_2']['div_7']['button_2'].id='stop_button';
+		P['div_0']['div_2']['div_7']['button_3']={};
+		P['div_0']['div_2']['div_7']['button_3'].id='backw_button';
+		P['div_0']['div_2']['div_7']['button_4']={};
+		P['div_0']['div_2']['div_7']['button_4'].id='forew_button';
+		P['div_0']['div_2']['div_7']['button_5']={};
+		P['div_0']['div_2']['div_7']['button_5'].id='mod_button';
+		
+		P['div_0']['div_2']['div_8']={};
+		P['div_0']['div_2']['div_8'].id='messager';
+		
+		P['div_0']['div_2']['div_8']['div_9']={};
+		P['div_0']['div_2']['div_8']['div_9'].id='mslines';
+		
+		P['div_0']['div_2']['div_8']['div_9']['div_10']={};
+		P['div_0']['div_2']['div_8']['div_9']['div_10'].class='left';
+		P['div_0']['div_2']['div_8']['div_9']['div_10'].text='00:00:00';
+		P['div_0']['div_2']['div_8']['div_9']['div_11']={};
+		P['div_0']['div_2']['div_8']['div_9']['div_11'].class='center';
+		P['div_0']['div_2']['div_8']['div_9']['div_11'].text='00:00:00';
+		P['div_0']['div_2']['div_8']['div_9']['div_12']={};
+		P['div_0']['div_2']['div_8']['div_9']['div_12'].class='right';
+		P['div_0']['div_2']['div_8']['div_9']['div_12'].text='volume';
+		
+		P['div_0']['div_2']['div_8']['div_13']={};
+		P['div_0']['div_2']['div_8']['div_13'].id='play_src';
+		
+		P['div_0']['div_2']['div_8']['div_13']['div_14']={};
+		P['div_0']['div_2']['div_8']['div_13']['div_14'].text='nothing to played';
+		
+		P['div_0']['div_15']={};
+		P['div_0']['div_15'].id='playlist_map';
+		
+		P['div_0']['div_15']['p_0']={};
+		P['div_0']['div_15']['p_0'].id='lock';
+		P['div_0']['div_15']['p_0'].style='text-align:center;cursor:pointer';
+		P['div_0']['div_15']['p_0'].text='Open the Media Library and click here to activate the playlist';
+		
+		P['div_0']['div_15']['ol_0']={};
+		P['div_0']['div_15']['ol_0'].id='player_playlist';
+		P['div_0']['div_15']['ol_0'].typelist='player';
+		
+		Craft(P);
+		
+		/*playerelement.content=dom_map;
+		playerelement.modify();*/
+}
+
