@@ -1,0 +1,42 @@
+#play_button{
+	background:url(../theme/player_pl.png)
+}
+
+#pause_button{
+	background:url(../theme/player_p.png);
+}
+
+#stop_button{
+	background:url(../theme/player_0.png);
+}
+
+#backw_button{
+	background:url(../theme/player_rw.png);
+}
+
+#forew_button{
+	background:url(../theme/player_fw.png);
+}
+
+#mod_button{
+	background:url(../theme/player_m.png);
+}
+
+#playercontrols{
+	margin:0px 10px;
+}
+
+#playercontrols button{
+	background-size: 40px 40px;
+	width:40px;
+	height:40px;
+	border:none;
+}
+
+#playlist_map li{
+	font-size:12pt;
+}
+
+#lock{
+	margin:5px;
+}
