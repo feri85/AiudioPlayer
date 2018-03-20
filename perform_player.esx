@@ -1,0 +1,522 @@
+﻿Function.prototype.offsets=function(p,y){
+	if(!y){
+		if(p instanceof Function){
+			var inherit=new p();
+		}
+		for(var n in inherit){
+			if(typeof inherit[n]!='undefined'){
+				
+				this.prototype[n]=inherit[n];	
+				//this.constructor.__proto__[n]=inherit[n];
+			}
+		}
+	}
+	else{
+		for(var n in p){
+			if(typeof y[n]!='undefined'){
+				p[n]=y[n];
+				this.prototype[n]=p[n];
+			}	
+		}
+		
+	};
+};
+
+var playerPerform=function(){
+	playerPerform.prototype.constants={
+		name:'domPlayer',
+		width:250,
+		height:130,
+		placed:null,
+		autoplay:false,
+		playfile:[],
+		handler:null,
+		tracklist:false,
+	};
+	playerPerform.defaultPlayTracks={};
+	playerPerform.trackList=null;
+	playerPerform.prototype.defaults=this.constants;
+	Emule('player_header','player_navbar','volume_navbar','player_map','play_button','pause_button','stop_button','backw_button','forew_button','player_playlist','mslines','play_src','playlist_map');
+	playerPerform.prototype.body=player_map.member;
+	playerPerform.prototype.header=player_header.member;
+	playerPerform.prototype.navbar=player_navbar.member.childNodes[0];
+	playerPerform.prototype.volumes=volume_navbar.member.childNodes[0];
+	playerPerform.prototype.navbar_fullwidth=player_navbar.member.clientWidth;
+	playerPerform.prototype.sensor_width=player_navbar.member.childNodes[0].clientWidth;
+	playerPerform.prototype.Errors={
+		0:'The parameter wrong typed, or not a function!',
+	};
+	
+	this.playerDimensions=function(options){
+		playerelement.member.style.width=options.width+'px';
+		playerelement.member.style.height=options.height+'px';
+		if(this.placed){
+			Pattern(this.placed+'>playerelement');
+		}
+	};
+}
+
+var playerEditor=function(options){
+	playerEditor.offsets(playerPerform);
+	playerEditor.offsets(this.defaults,options);
+	playerPerform.defaultPlayTracks['1']=this.defaults.playfile;
+	this.trackList=this.defaults.tracklist;
+	this.audioFile=null;
+	this.playlistEnable=false;
+	var audiofile=null;
+	var timepresent='floated';
+	var minutes=1;
+	var seconds=1;
+	var that=this;
+	
+	this.captureAudioFile=(function(srcfile){
+		audio=new Audio();
+		if(srcfile){
+			audio.src=srcfile[0]+'.'+srcfile[1];
+			audio.type='audio/'+srcfile[1];
+		}
+		this.audioFile=audio;
+		window['audioFile']=audio;
+		return audio;
+	});
+	
+	this.getPlayerName=function(present){
+		if(present=='authname'){
+			return this.constants.name;
+		}
+		else{
+			return this.defaults.name;
+		}
+	};
+	this.getAudioFile=function(){
+		return this.audiofile;
+	}
+	
+	this.getFileSrc=function(){
+		return this.defaults.playfile;
+	};
+	
+	this.getPlayerTime=function(af,mode,ended){
+		var playtime=parseInt(af.currentTime);
+		var endtime=parseInt(af.duration);
+		if(mode=='tracktime'){
+			playtime=endtime;
+		};
+		//convert timeupdate seconds to offseted nondecimal timelevels;
+		//stole the integer number from the front of counter's value; (set to 0 counter timer); 
+		//because the clock's pointer runs periodicaly;
+		var hh=Math.floor(playtime/(3600)); hh=(hh<10)? '0'+hh:hh;
+		var mm=Math.floor((playtime/3600-Math.floor(playtime/3600))*60); mm=(mm<10)? '0'+mm:mm;
+		var ss=Math.round((playtime/60-Math.floor(playtime/60))*60); ss=(ss<10)? '0'+ss:ss;
+	
+		if(mode==timepresent){
+			return {
+				timer:af.currentTime,
+				length:af.duration,
+				endtrack:af.ended,
+				pausetrack:af.paused,
+				looptrack:af.loop,
+				volume:af.volume,
+				getsrc:af.src,
+			};
+		}
+		else{
+			return {
+				to_hours:hh,
+				to_minutes:mm,
+				to_seconds:ss,
+				//endtime:af.duration,
+				endtrack:af.ended,
+				pausetrack:af.paused,
+				looptrack:af.loop,
+				volume:af.volume,
+				getsrc:af.src,
+			};
+		}
+	};
+	this.setPlayfile=function(source,type){
+		if(source && type){
+			playerPerform.defaultPlayTracks['0']=[];
+			playerPerform.defaultPlayTracks['0'][0]=source;
+			playerPerform.defaultPlayTracks['0'][1]=type;	
+		}
+	};
+	
+	this.getNodeParentRoot=function(startnode,endnode,request,where){
+		var attributelist=[];
+		var nodegroup=startnode;
+		var data={root:null,near:[],research:[]};
+		var c=0;
+		while(nodegroup.offsetParent){
+			if(nodegroup!=endnode){
+				data.near.push(nodegroup);
+				if(request && where){
+					data.research.push(nodegroup[whwere][request].value);
+				}
+				else{
+					data.research.push(nodegroup[request]);
+					
+				}
+				data.root=nodegroup;
+				nodegroup=nodegroup.parentNode;
+				c++;
+			}
+		};
+		return data;
+	}
+};
+
+playerEditor.playerEvents=function(){
+	playerEditor.playerEvents.offsets(playerEditor);
+	playerEditor.playerEvents.offsets(this,playerEditor.prototype);
+	var audiofile=null;
+	var bar_sensor=this.navbar;
+	var bar_width=this.navbar_fullwidth;
+	var vbar_width=this.volumes;
+	var sensorwidth=this.sensor_width;
+	var that=this;
+	
+	var playerBar=function(timeobj){
+		// af.length/af.current=barwidth/sensorwidth;
+		var currentwidth=Math.floor((bar_width*timeobj.timer)/timeobj.length);
+		bar_sensor.style.width=currentwidth+'px';
+	};
+	
+	var sensorBar=function(e,node,timeobj){
+		// af.length/af.current=barwidth/sensorwidth;
+		var full_w=0;
+		var sensorroot=that.getNodeParentRoot(node.childNodes[0],document.body,'offsetLeft').research;
+		eX=e.clientX;
+		for(var w=0; w<sensorroot.length; w++){
+			full_w+=sensorroot[w];
+		}
+		var navigator=eX-full_w;
+		if(navigator<bar_width){
+			return ((timeobj.length*navigator)/bar_width);
+		}
+		else{
+			return timeobj.length;
+		}
+	};
+	
+	var playVolume=function(e,node){
+		var maxvolume=1;
+		var full_vw=0;
+		eV=e.clientX;
+		var getnoderoot=that.getNodeParentRoot(node.childNodes[0],document.body,'offsetLeft').research;
+		for(var z=0; z<getnoderoot.length; z++){
+			full_vw+=getnoderoot[z];
+		}
+		var volumes=eV-full_vw;
+		var vb=Math.round(((1/node.offsetWidth)*volumes)*10)/10;
+		volume_navbar.member.childNodes[0].style.width=(volumes-2)+'px';
+		return vb;
+	}
+	
+	this.playEnable=function(q){
+		if(!audiofile){
+			audiofile=this.captureAudioFile(playerPerform.defaultPlayTracks['1']);
+			this.audioFile=audio;
+		}
+		if(q==false){
+			audio.pause();
+		}
+		if(q==true){
+			audio.play();
+		}
+	};
+	
+	this.timePerformed=function(){
+		//var audiofile=audio;
+		var typelist=arguments;
+		var clockdata=this.getPlayerTime;
+		audio.ontimeupdate=function(){
+			var afclock=clockdata(audio);
+			var afloat=clockdata(audio,'floated');
+			playerBar(afloat);
+			if(typelist[0]){
+				for(i=0; i<typelist.length;i++){
+					if(typelist[i] instanceof Function){
+						typelist[i]();
+					}
+				}
+			};
+		}
+	};
+	
+	this.playerContacts=function(){
+		var get_sensorroot=this.getNodeParentRoot;
+		pause_button.member.onclick=function(){audio.pause();};
+		play_button.member.onclick=function(){audio.play();};
+		stop_button.member.onclick=function(){audio.pause();audio.currentTime=0};
+		forew_button.member.onclick=function(){
+			if(audio.currentTime<audio.duration-4){
+				audio.currentTime+=4
+			}
+		};
+		backw_button.member.onclick=function(){
+			if(audio.currentTime>4){
+				audio.currentTime-=4
+			}
+		};
+		var clockdata=this.getPlayerTime;
+		player_navbar.member.onmousedown=function(ev){
+			if(audio.currentTime>0){
+				audio.currentTime=sensorBar(ev,this,clockdata(audio,'floated'));
+			}
+		}
+		this.volumes.parentNode.onclick=function(ev){
+			audio.volume=playVolume(ev,this);
+		}
+	};
+	this.playlistContact=function(){
+		var typelist=arguments;
+		var af=this.captureAudioFile(playerPerform.defaultPlayTracks['0']);
+		Emule('mod_button');
+		
+		player_playlist.member.onclick=function(e){
+			if(typelist[0]){
+				for(i=0; i<typelist.length;i++){
+					if(typelist[i] instanceof Function){
+						typelist[i](e);
+					}
+				}
+			};
+		}
+		mod_button.member.onclick=function(){
+			if(playerEditor.playorder>=3){playerEditor.playorder=1}else{playerEditor.playorder++};
+			//this.textContent='?-'+playerEditor.playorder;
+		};
+	}
+};
+
+playerEditor.Playlist=function(){
+	this.constructor.offsets(playerEditor.playerEvents);
+	this.constructor.offsets(this,playerEditor.playerEvents);
+	var that=this;
+	var nth=0;
+	var trackcount=0;
+	var timeobj=this.getPlayerTime;
+	var listkeys=[];
+	var playtracks=null;
+	var copy=null;
+	playerEditor.playorder=1;
+	
+	//CHECK AND RELOAD PLAYLIST WHEN USER MODIFY IT
+	
+	this.ready=function(){ 
+		trackcount=0;
+		playtracks={};
+		var listnodes=player_playlist.member.childNodes;
+		for(var n=0; n<listnodes.length; n++){
+				var tracknode=player_playlist.member.childNodes[n];
+				if(tracknode.tagName=='LI'){ 
+					var th=document.createAttribute('playnumber');
+					trackcount+=1;
+					th.value=trackcount;
+					tracknode.attributes.setNamedItem(th);
+					playtracks[trackcount+'']=[];
+					playtracks[trackcount+''][1]=(tracknode.attributes.compression.value);
+					playtracks[trackcount+''][0]=(tracknode.attributes.src.value+'/'+tracknode.attributes.filename.value);
+				}
+		}
+		playerPerform.defaultPlayTracks=playtracks;
+	};
+	
+	//select element pointclick and add audio data to audio object to play it
+	
+	this.pointselect=function(e){
+		var point=(e.target||e.srcElement);
+		if(point && point.attributes.playnumber){	
+			var plnum=parseInt(point.attributes.playnumber.value);		
+			audio.src=point.attributes.src.value+'/'+
+			point.attributes.filename.value+'.'+
+			point.attributes.compression.value;
+			audio.play();
+		};
+		nth=plnum-1;
+	}
+	
+	//SET THE NEXT SOURCE OF PLAYFILE
+	// case1- playlist play continously;
+	// case2- playing tracks random;
+	// case3- playing selected tracks to infinite loop;
+	
+	this.play_nextsource=function(){
+		listkeys=[];
+		playtracks=playerPerform.defaultPlayTracks;
+		if(timeobj(audio,'floated').endtrack){
+			for(var p in playtracks){
+				listkeys.push(p);
+			};
+			switch(playerEditor.playorder){
+				case 1: 
+					if(nth<listkeys.length){
+						audio.currentTime=0;
+						nth++;
+					}
+					if(nth>=listkeys.length){
+						nth=0;
+					};
+				break;
+				case 2:
+					nth=(Math.floor(Math.random()*(listkeys.length)));
+				break;
+				case 3:
+					nth;
+				break;
+			}
+			if(listkeys.length>0){
+				var pl=listkeys[nth];
+				audio.src=playtracks[(pl)+''][0]+'.'+playtracks[(pl)+''][1];
+				audio.play();
+			};
+		};
+	}
+	
+	//EVENTS ONLY OWN PLAYLIST
+	
+	var get_droppoint=function(ev,tag,filter,output){
+			var obj=(ev.srcElement||ev.target);
+			if(obj.tagName==tag && obj.attributes[filter]){
+				that[output]=obj;
+			}
+	};
+	
+	//add and removing item;
+	//rightclick to select from media library or delete from player own list;
+	//click to add item a player list or playing a file;
+	
+	var add_remove_item=function(t,f,out){
+		var copy=null;
+		libraryes=null;
+		
+		//if(Use('audio-media')){
+		//}	
+		
+		Use('lock').onclick=function(){
+			if(Use('audio-media')){
+				libraryes=Use('audio-media','/g');
+				for(var parts=0; parts<libraryes.length; parts++){
+					libraryes[parts].onmousedown=uselibrary;
+				};
+				this.parentNode.removeChild(this);
+			}
+		}
+		
+		var uselibrary=function(e){
+			get_droppoint(e,t,f,out);
+			var obj=(e.srcElement||e.target);
+			nodeparent=obj.parentNode;
+			if(that[out]){
+				copy=that[out].cloneNode(true);
+			}
+		};
+			
+		playlist_map.member.onmousedown=function(){
+			//e.preventDefault();
+			/*if(Use('audio-media')){
+				libraryes=Use('audio-media','/g');
+				for(var parts=0; parts<libraryes.length; parts++){
+					libraryes[parts].onmousedown=uselibrary;
+				};
+			}*/
+			if(copy && that[out]){
+				var th=document.createAttribute('playnumber');
+				th.value=(trackcount+=1);
+				copy.attributes.setNamedItem(th);
+				player_playlist.member.appendChild(copy);
+				
+			}
+			delete that[out];
+		};
+		player_playlist.member.oncontextmenu=function(e){
+			e.preventDefault();
+			get_droppoint(e,t,f,out);
+			that[out].parentNode.removeChild(that[out]);
+			delete playtracks[that[out].attributes.playnumber.value];
+			delete that[out];
+		};
+		
+	};
+	
+	//this scope avail only if player's own playlist enabled
+	//this opportunity enable to define medialib xml(DOM) object type, if typelist property has set;
+	
+	this.addOwnListener=function(){
+		return{
+			addremoveitem:add_remove_item,
+		};
+	};
+};
+
+playerEditor.playerInfo=function(){
+	this.constructor.offsets(playerEditor);
+	var that=this;
+	
+	this.timeCounter=function(){
+		var timeinfo=that.getPlayerTime(audio);
+		var timelength=that.getPlayerTime(audio,'tracktime');
+		mslines.member.childNodes[0].textContent=timeinfo.to_hours+':'+timeinfo.to_minutes+':'+timeinfo.to_seconds;
+		mslines.member.childNodes[1].textContent=timelength.to_hours+':'+timelength.to_minutes+':'+timelength.to_seconds;
+		play_src.member.childNodes[0].textContent=timeinfo.getsrc.match(/(\w|[0-9]|[^\x00-\x7F]+){1,}\/.(\w|[0-9]|[^\x00-\x7F]+){1,}\.(([a-z]{1,4})*([0-9]{1,4}))/g);
+	}
+}
+
+	// DEFINE PLAYER
+
+var Player=function(data){
+	var performed=new playerEditor(data);
+	var general=performed.defaults;
+	performed.playerDimensions(general);
+	var playlist=new playerEditor.Playlist();
+	var events=new playerEditor.playerEvents();
+	var info=new playerEditor.playerInfo();
+	
+	function playersettings(){
+		events.timePerformed();
+		events.playerContacts();
+	};
+	
+	//CONFIG THE PLAYER PLAYBACK MODES;
+	
+	function playback(mode){
+		switch(mode){
+			
+		//MODE 1: the player navigated with an outer PlayerHandler functon;
+			
+				case 1: 
+					if(general.handler instanceof Function){
+						window['playerHandler']=function(){
+							return {general:performed,palyevents:events,list:playlist};
+						};
+						general.handler();
+						//playersettings();
+					}
+				break;
+				
+		//MODE 2: Playing an predefined audio file;
+			
+				case 2:
+					performed.setPlayfile(general.playfile[0],general.playfile[1]);
+					events.playEnable(general.autoplay);
+					playersettings();		
+				break;
+				
+		//MODE is defeault when playing one or more audiofile on the player own playlist;
+			
+				default:
+					playlist.ready();
+					events.playlistContact(playlist.ready,playlist.pointselect);
+					events.timePerformed(playlist.ready,playlist.play_nextsource,info.timeCounter);
+					events.playerContacts();
+					playlist.addOwnListener().addremoveitem('LI','filename','pointfrom');			
+				break;
+		}
+	}
+	playback(data.playbackMode);		
+}
+	
+	
+	
+
