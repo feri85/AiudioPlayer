@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset='utf-8'/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<style type='text/css'>
+		</style>
+		<script type='text/javascript' src='meridian_toolkit.js'></script>
+		<script type='text/javascript'>
+				
+			
+			window.onload=function(){
+				loadModul('./player_source.esx','PlayerReStore',
+					[{
+						width:320,
+						height:200,
+						//playfile:['./audio_lib/winterbliss','mp3'],
+						//autoplay:true,
+						/*handler:function(){
+							var player=playerHandler().general;
+							var events=playerHandler().palyevents;
+							var list=playerHandler().list;
+								player.setPlayfile('./audio_lib/winterbliss','mp3');
+								events.playEnable(true);
+								events.playlistContact(list.ready);
+						}*/
+					}]
+				);
+	
+			}
+			
+		</script>
+		
+	</head>
+	<body>
+		<div>
+			<ol typelist='audio-media'>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='winterbliss'> winterbliss </li>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='shpongle'> shpongle </li>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='vainstar'> vainstar </li>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='space_pirates_castle_crashers'> space pirates </li>
+			</ol>
+			<ol typelist='audio-media'>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='vainstar'> vainstar </li>
+				<li mediatype='audio' src='audio_lib' compression='mp3' filename='space_pirates_castle_crashers'> space pirates </li>
+			</ol>
+		</div>
+	</body>
+</html>
